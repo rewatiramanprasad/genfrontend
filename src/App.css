@@ -101,3 +101,19 @@ input{
   overflow-y: scroll;
   height: 483px;
 }
+
+@media screen and (max-width:360px) {
+  .chatInside {
+    display: flex;
+    flex-direction: column;
+    height: 414px;
+    margin-top: 56px;
+    min-width: 310px;
+    overflow-y: scroll;
+  }
+  .app{
+    min-width: 385px;
+    min-height: 730px;
+
+  }
+}

@@ -6,12 +6,12 @@ import Chat from "./Chat";
 const App = () => {
   const [raw, setRaw] = useState([{id:0,message:"",isUser:false}]);
   // console.log(raw)
-  const [suggestionData, setSuggestionData] = useState([]);
+  const [suggestionData, setSuggestionData] = useState([{id:0,mesage:null}]);
   const [button, setButton] = useState(1);
   const [gemini, setGemini] = useState([]);
   const [chatgpt, setChatgpt] = useState([]);
   const [value, setValue] = useState("");
-  // console.log(value)
+  console.log(suggestionData)
   useEffect(() => {
     setGemini(raw);
     // const data = raw.slice(0, 5);
