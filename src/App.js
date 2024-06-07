@@ -2,25 +2,23 @@ import "./App.css";
 import Suggestion from "./Suggestion";
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import Chat from "./Chat";
 const App = () => {
   const [raw, setRaw] = useState([{id:0,message:"",isUser:false}]);
   // console.log(raw)
-  const [suggestionData, setSuggestionData] = useState([{id:0,mesage:null}]);
+  const [suggestionData, setSuggestionData] = useState([]);
   const [button, setButton] = useState(1);
   const [gemini, setGemini] = useState([]);
   const [chatgpt, setChatgpt] = useState([]);
   const [value, setValue] = useState("");
-  console.log(suggestionData)
+  // console.log(suggestionData)
   useEffect(() => {
     setGemini(raw);
-    // const data = raw.slice(0, 5);
-    // setSuggestionData(data);
-    // console.log("they called me");
   }, [raw]);
 
-  const handleSuggestion = (item) => {
-    setValue(item.message);
+  const handleSuggestion = (message) => {
+    setValue(message);
   };
   const callSuggestion = async() => {
     try {
@@ -38,16 +36,17 @@ const App = () => {
       if (resp.success) {
         let data = JSON.parse(resp.data);
         console.log(data);
-        let temp=[];
-        for( let i=0;i<data.length-1;i++){
-          temp.push({id:i,message:data[i]});
-        }
-        console.log(temp)
-        return temp
+        // let temp=[];
+        // for( let i=0;i<data.length-1;i++){
+        //   temp.push({id:i,message:data[i]});
+        // }
+        // console.log(temp)
+        return data
         // console.log(data,temp);
         // setSuggestionData(temp);
       } else {
-        throw new Error(resp.message);
+        toast("No suggestions")
+        console.log(resp)
       }
     } catch (error) {
       toast(error.message);
@@ -99,8 +98,8 @@ const App = () => {
     await setRaw([...raw,map, call]);
     const sugdata=await callSuggestion();
     // console.log(sugdata)
-    await setSuggestionData(sugdata);
-
+    await  setSuggestionData(sugdata);
+    setValue("");
     // raw.push(map)
 
     
@@ -141,13 +140,12 @@ const App = () => {
       </div>
       <div className="fixedContainer">
         <div className="suggestion">
-          {suggestionData.map((item) => (
+          
             <Suggestion
-              data={item}
-              key={item.id}
+              data={suggestionData}
               handleSuggestion={handleSuggestion}
             />
-          ))}
+          
         </div>
         <div className="action">
           <input

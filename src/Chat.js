@@ -15,6 +15,7 @@ const Chat = ({button,gemini,chatgpt}) => {
             alignSelf: item.isUser ? 'flex-end' : 'flex-start',
             backgroundColor: item.isUser ? 'white' : 'whiteSmoke',
             margin:"7px",
+            padding: "7px",
             borderRadius:'5px'
 
         }}>
@@ -30,6 +31,8 @@ const Chat = ({button,gemini,chatgpt}) => {
         
             <div key={item.id} style={{
                 alignSelf: item.isUser ? 'flex-end' : 'flex-start',
+                padding: "7px",
+                margin:"7px",
                 backgroundColor: item.isUser ? '#d1e7dd' : '#f8d7da',
             }}>
                 <div  >{item.message}</div>
