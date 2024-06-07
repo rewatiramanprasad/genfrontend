@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useEffect,useRef } from 'react';
 import "./App.css";
 
 const Chat = ({button,gemini,chatgpt}) => {
   console.log(button,gemini,chatgpt)
-    // useEffect(()=>{
-        
-    // },[gemini])
+  const ref=useRef(null);
+    useEffect(()=>{
+      ref.current?.scrollIntoView({ behavior: 'smooth' });
+    },[gemini]);
+    
   return (
     <div className='chatContainer'>
         
-        <div className='chatInside'>{button===1&& gemini.map((item)=>(
+        <div className='chatInside'>{gemini&&button===1&& gemini.map((item)=>(
         
         <div key={item.id} style={{
             alignSelf: item.isUser ? 'flex-end' : 'flex-start',
@@ -19,7 +21,7 @@ const Chat = ({button,gemini,chatgpt}) => {
             borderRadius:'5px'
 
         }}>
-            <div  >{item.message}</div>
+            <div  ref={ref} >{item.message}</div>
             
         </div>
     
@@ -27,7 +29,7 @@ const Chat = ({button,gemini,chatgpt}) => {
   </div>
       
       <div>
-        {button===2&& chatgpt.map((item)=>(
+        {chatgpt&&button===2&& chatgpt.map((item)=>(
         
             <div key={item.id} style={{
                 alignSelf: item.isUser ? 'flex-end' : 'flex-start',

@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Chat from "./Chat";
 const App = () => {
-  const [raw, setRaw] = useState([{id:0,message:"",isUser:false}]);
+  const [raw, setRaw] = useState([]);
   // console.log(raw)
   const [suggestionData, setSuggestionData] = useState([]);
   const [button, setButton] = useState(1);
@@ -49,7 +49,7 @@ const App = () => {
         console.log(resp)
       }
     } catch (error) {
-      toast(error.message);
+      toast("No suggestions");
     }
   };
   const callAPI = async () => {
@@ -68,7 +68,7 @@ const App = () => {
       if (resp.success) {
         let map = {};
         // console.log(raw[raw.length-1].id);
-        map.id = raw[raw.length - 1].id + 1;
+        map.id = raw[raw.length - 1] + 1||0;
         map.message = resp.data;
         map.isUser = false;
         return map;
@@ -86,8 +86,8 @@ const App = () => {
   };
   const handleSubmit = async() => {
     let map = {};
-    console.log(raw[raw.length-1].id);
-    map.id = raw[raw.length -1].id + 1;
+    // console.log(raw[raw.length-1].id);
+    map.id = raw[raw.length -1] + 1||0;
     map.message = value;
     map.isUser = true;
     // raw.push(push)
@@ -105,6 +105,11 @@ const App = () => {
     
     // console.log(data,map,raw)
   };
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  }
   return (
     <div className="App">
       <ToastContainer />
@@ -152,6 +157,7 @@ const App = () => {
             type="text"
             placeholder="Type a prompt"
             value={value}
+            onKeyDown={handleKeyDown}
             onChange={(e) => {
               setValue(e.target.value);
             }}
